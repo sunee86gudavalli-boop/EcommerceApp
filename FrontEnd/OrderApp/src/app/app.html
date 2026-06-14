@@ -1,0 +1,52 @@
+<div>
+  <header class="header">
+    <h1>Order Management System</h1>
+  </header>
+
+  @if (!isUserLoggedIn) {
+    <main class="content">
+      <div>
+        <form [formGroup]="loginForm" (ngSubmit)="login()">
+          <div>
+            <label>Email</label>
+            <input type="email" formControlName="email" />
+          </div>
+
+          <br />
+
+          <div>
+            <label>Password</label>
+            <input type="password" formControlName="password" />
+          </div>
+
+          <br />
+
+          <button type="submit">Login</button>
+        </form>
+      </div>
+    </main>
+  }
+
+  @if (isUserLoggedIn) {
+    <nav class="navbar">
+      <ul>
+        <li><a routerLink="/orders">Orders</a></li>
+        <li><a routerLink="/inventory">Inventory</a></li>
+        <li><a routerLink="/products">Products</a></li>
+        <li><a routerLink="/notifications">Notifications</a></li>
+        <li style="text-align: right;">
+          <button type="button" (click)="logout()">Logout</button>
+        </li>
+      </ul>
+    </nav>
+
+    <main class="content">
+      <p>Logged in with customer ID: {{ loggedInCustomerId }}</p>
+      <router-outlet></router-outlet>
+    </main>
+  }
+
+  <footer class="footer">
+    <p>© 2026 Order Management System</p>
+  </footer>
+</div>

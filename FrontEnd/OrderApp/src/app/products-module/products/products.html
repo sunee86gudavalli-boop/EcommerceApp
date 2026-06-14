@@ -1,0 +1,45 @@
+<div class="card">
+  <h2>Products</h2>
+
+  <form class="form-grid" [formGroup]="productForm" (ngSubmit)="addProduct()">
+    <label>
+      Product Name
+      <input type="text" formControlName="name" />
+    </label>
+    @if (productForm.controls.name.touched && productForm.controls.name.invalid) {
+      <p class="error-message">Product name is required.</p>
+    }
+
+    <label>
+      Price
+      <input type="number" step="0.01" formControlName="price" />
+    </label>
+    @if (productForm.controls.price.touched && productForm.controls.price.invalid) {
+      <p class="error-message">Price must be 0 or greater.</p>
+    }
+
+    <button type="submit">Add Product</button>
+  </form>
+
+  @if (createSuccessMessage) {
+    <div class="success-message">{{ createSuccessMessage }}</div>
+  }
+
+  @if (createErrorMessage) {
+    <div class="error-message">{{ createErrorMessage }}</div>
+  }
+
+  <div class="list">
+    <h3>Available Products</h3>
+    @if (products.length === 0) {
+      <p>No products added yet.</p>
+    } @else {
+      @for (product of products; track product.id) {
+        <div class="list-row">
+          <span>Name: {{ product.name }}</span>
+          <span>Price: ${{ product.price }}</span>
+        </div>
+      }
+    }
+  </div>
+</div>

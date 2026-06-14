@@ -1,0 +1,66 @@
+@startuml
+title EcommerceApp AWS Setup
+
+skinparam backgroundColor white
+skinparam packageStyle rectangle
+skinparam shadowing false
+skinparam defaultTextAlignment center
+
+cloud "AWS" {
+  frame "Region: us-east-2" {
+    package "VPC\n10.0.0.0/16" as VPC {
+      rectangle "Internet Gateway" as IGW
+
+      package "Public Subnets" {
+        rectangle "Public Subnet One\n10.0.1.0/24" as PublicSubnetOne
+        rectangle "Public Subnet Two\n10.0.2.0/24" as PublicSubnetTwo
+      }
+
+      package "Private Subnets" {
+        rectangle "Private Subnet One\n10.0.3.0/24" as PrivateSubnetOne
+        rectangle "Private Subnet Two\n10.0.4.0/24" as PrivateSubnetTwo
+      }
+
+      rectangle "Public Route Table\n0.0.0.0/0 -> IGW" as PublicRouteTable
+      rectangle "Private Route Table" as PrivateRouteTable
+
+      node "EC2 Instance\nweb_instance" as EC2
+      rectangle "Security Group\n80, 22, 443 from 0.0.0.0/0" as SG
+    }
+
+    package "IAM" {
+      rectangle "IAM Policy\nexample_policy" as Policy
+      rectangle "IAM Role\nexample_role" as Role
+      rectangle "Instance Profile\nexample_profile" as Profile
+    }
+  }
+}
+
+VPC --> IGW : attached
+
+PublicSubnetOne --> PublicRouteTable : associated
+PublicSubnetTwo --> PublicRouteTable : associated
+PrivateSubnetOne --> PrivateRouteTable : associated
+PrivateSubnetTwo --> PrivateRouteTable : associated
+
+PublicRouteTable --> IGW : default route
+
+EC2 --> PublicSubnetOne : deployed in
+EC2 --> SG : uses
+EC2 --> Profile : attached
+
+Profile --> Role : contains
+Role --> Policy : attached
+
+note right of PublicRouteTable
+  Public subnets have internet access
+  through the Internet Gateway.
+end note
+
+note right of PrivateRouteTable
+  No NAT gateway is defined.
+  Private subnets have no outbound
+  internet route in this setup.
+end note
+
+@enduml

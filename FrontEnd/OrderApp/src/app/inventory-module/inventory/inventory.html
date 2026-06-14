@@ -1,0 +1,76 @@
+<div class="card">
+  <h2>Inventory</h2>
+
+  <form class="form-grid" [formGroup]="inventoryForm" (ngSubmit)="addInventory()">
+    <label>
+      Product
+      <input
+        type="text"
+        formControlName="productName"
+        list="inventory-product-options"
+        placeholder="Select or enter product name"
+      />
+      </label>
+      <label>Quantity
+      <input
+        type="text"
+        formControlName="quantity"
+        placeholder="Enter quantity"
+      />
+    </label>
+    <label>Price
+      <input
+        type="text"
+        formControlName="price"
+        placeholder="Enter Price"
+      />
+    </label>
+
+    <datalist id="inventory-product-options">
+      @for (product of products; track product.id) {
+        <option [value]="product.name">{{ product.name }}</option>
+      }
+    </datalist>
+
+    <button type="submit">Add Stock</button>
+  </form>
+  @if (inventoryForm.controls.productName.touched && inventoryForm.controls.productName.invalid) {
+    <p class="error-message">Product name is required.</p>
+  }
+  @if (inventoryForm.controls.quantity.touched && inventoryForm.controls.quantity.invalid) {
+    <p class="error-message">Product quantity is required.</p>
+  }
+  @if (inventoryForm.controls.price.touched && inventoryForm.controls.price.invalid) {
+    <p class="error-message">Product price is required.</p>
+  }
+
+  @if (createSuccessMessage) {
+    <div class="success-message">{{ createSuccessMessage }}</div>
+  }
+
+  @if (createErrorMessage) {
+    <div class="error-message">{{ createErrorMessage }}</div>
+  }
+
+  <div class="list">
+    <h3>Inventory Records</h3>
+    @if (inventories.length === 0) {
+      <p>No inventory records yet.</p>
+    } @else {
+      @for (inventory of inventories; track inventory.inventoryId) {
+        <div class="list-row">
+          <span>
+            {{ inventory.product?.name ?? 'No product' }}
+            @if (inventory.product?.id) {
+              <small>(ID: {{ inventory.product?.id }})</small>
+            }
+          </span>
+          <span>Stock: {{ inventory.stock }}</span>
+          <span>Price: ${{ inventory.product?.price ?? 0 }}</span>
+          <span>Date: {{ inventory.date | date:'medium' }}</span>
+          <!-- <span>Quantity: {{ inventory.quantity | quantity:'medium' }}</span> -->
+        </div>
+      }
+    }
+  </div>
+</div>
