@@ -165,3 +165,9 @@ variable "db_instance_class" {
   type        = string
   default     = "db.t3.micro"
 }
+
+variable "db_secret_name_prefix" {
+  description = "Specify the prefix used when creating the RDS credentials secret."
+  type        = string
+  default     = "ecommerceapp-rds-credentials-"
+}

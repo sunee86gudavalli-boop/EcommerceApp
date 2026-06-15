@@ -24,16 +24,16 @@ resource "aws_security_group" "rds_sg" {
   }
 }
 
-resource "aws_secretsmanager_secret" "rds_credentials" {
-  name = "ecommerceapp-rds-credentials"
+resource "aws_secretsmanager_secret" "rds_credentials_new" {
+  name_prefix = var.db_secret_name_prefix
 
   tags = {
-    Name = "ecommerceapp-rds-credentials"
+    Name = var.db_secret_name_prefix
   }
 }
 
-resource "aws_secretsmanager_secret_version" "rds_credentials" {
-  secret_id = aws_secretsmanager_secret.rds_credentials.id
+resource "aws_secretsmanager_secret_version" "rds_credentials_new" {
+  secret_id = aws_secretsmanager_secret.rds_credentials_new.id
   secret_string = jsonencode({
     username = var.db_username
     password = var.db_password
@@ -112,7 +112,7 @@ data "aws_iam_policy_document" "secrets_access" {
       "secretsmanager:GetSecretValue",
     ]
     resources = [
-      aws_secretsmanager_secret.rds_credentials.arn,
+      aws_secretsmanager_secret.rds_credentials_new.arn,
     ]
   }
 }
@@ -138,5 +138,10 @@ output "rds_endpoint" {
 
 output "rds_secret_arn" {
   description = "The Secrets Manager ARN containing the RDS credentials"
-  value       = aws_secretsmanager_secret.rds_credentials.arn
+  value       = aws_secretsmanager_secret.rds_credentials_new.arn
+}
+
+output "rds_secret_name" {
+  description = "The Secrets Manager name containing the RDS credentials"
+  value       = aws_secretsmanager_secret.rds_credentials_new.name
 }
