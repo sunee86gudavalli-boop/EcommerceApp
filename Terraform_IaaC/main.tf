@@ -2,7 +2,7 @@
 resource "aws_instance" "web_instance" {
   ami           = lookup(var.ami_id, var.region)
   instance_type = var.instance_type
-  iam_instance_profile = aws_iam_instance_profile.example_profile.name
+  iam_instance_profile = aws_iam_instance_profile.ec2_profile.name
   subnet_id     = aws_subnet.custom-vpc-public-subnet-one.id
   vpc_security_group_ids = [aws_security_group.custom-vpc-security-group.id]
   key_name      = var.key_name
@@ -10,12 +10,6 @@ resource "aws_instance" "web_instance" {
   tags = {
     Name = var.ec2_tags
   }
-}
-
-### Create instance profile using role
-resource "aws_iam_instance_profile" "example_profile" {
-  name = "example_profile"
-  role = aws_iam_role.example_role.name
 }
 
 ### create security group

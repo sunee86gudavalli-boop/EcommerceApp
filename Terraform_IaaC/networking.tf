@@ -14,6 +14,7 @@ resource "aws_vpc" "custom-vpc-terraform" {
 resource "aws_subnet" "custom-vpc-public-subnet-one" {
   vpc_id      = aws_vpc.custom-vpc-terraform.id
   map_public_ip_on_launch = true
+  availability_zone = var.availability_zone_one
   cidr_block  = var.public_subnet_one
 
   tags = {
@@ -24,6 +25,7 @@ resource "aws_subnet" "custom-vpc-public-subnet-one" {
 resource "aws_subnet" "custom-vpc-public-subnet-two" {
   vpc_id      = aws_vpc.custom-vpc-terraform.id
   map_public_ip_on_launch = true
+  availability_zone = var.availability_zone_two
   cidr_block  = var.public_subnet_two
 
   tags = {
@@ -35,6 +37,7 @@ resource "aws_subnet" "custom-vpc-public-subnet-two" {
 resource "aws_subnet" "custom-vpc-private-subnet-one" {
   vpc_id      = aws_vpc.custom-vpc-terraform.id
   map_public_ip_on_launch = false
+  availability_zone = var.availability_zone_one
   cidr_block  = var.private_subnet_one
 
   tags = {
@@ -45,6 +48,7 @@ resource "aws_subnet" "custom-vpc-private-subnet-one" {
 resource "aws_subnet" "custom-vpc-private-subnet-two" {
   vpc_id      = aws_vpc.custom-vpc-terraform.id
   map_public_ip_on_launch = false
+  availability_zone = var.availability_zone_two
   cidr_block  = var.private_subnet_two
 
   tags = {

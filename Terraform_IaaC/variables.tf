@@ -34,6 +34,12 @@ variable "public_subnet_one" {
   default     = "10.0.1.0/24"
 }
 
+variable "availability_zone_one" {
+  description = "Specify the availability zone for subnet one."
+  type        = string
+  default     = "us-east-2a"
+}
+
 variable "public_subnet_one_tags" {
   description = "Specify the tags for public subnet one."
   type        = string
@@ -44,6 +50,12 @@ variable "public_subnet_two" {
   description = "Specify the cidr block for the public subnet two."
   type        = string
   default     = "10.0.2.0/24"
+}
+
+variable "availability_zone_two" {
+  description = "Specify the availability zone for subnet two."
+  type        = string
+  default     = "us-east-2b"
 }
 
 variable "public_subnet_two_tags" {
@@ -127,4 +139,29 @@ variable "key_name" {
   description = "Specify the key pair to be used for the instance."
   type        = string
   default     = "suneetha_keypari"
+}
+
+variable "db_name" {
+  description = "Specify the name of the application database."
+  type        = string
+  default     = "my_application_db"
+}
+
+variable "db_username" {
+  description = "Specify the master username for the RDS instance."
+  type        = string
+  default     = "admin_user"
+}
+
+variable "db_password" {
+  description = "Specify the master password for the RDS instance."
+  type        = string
+  sensitive   = true
+  default     = "SuperSecurePassword123!"
+}
+
+variable "db_instance_class" {
+  description = "Specify the RDS instance class."
+  type        = string
+  default     = "db.t3.micro"
 }
