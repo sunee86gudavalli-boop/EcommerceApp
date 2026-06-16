@@ -43,6 +43,14 @@ resource "aws_security_group" "custom-dev-vpc-security-group" {
   }
 
   ingress {
+    description = "Allow Spring Boot API access"
+    from_port   = 8083
+    to_port     = 8083
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
     description = "Allow ping access"
     from_port   = -1
     to_port     = -1

@@ -71,13 +71,19 @@ export interface InventoryCreateRequest {
   providedIn: 'root',
 })
 export class Service {
-  private apiNotificationUrl = 'http://localhost:8083/api/v1/notifications';
-  private apiOrdersUrl = 'http://localhost:8083/api/v1/orders';
-  private apiInventoryUrl = 'http://localhost:8083/api/v1/inventory';
-  private apiUsersUrl = 'http://localhost:8083/api/v1/customers';
-  private apiProductsUrl = 'http://localhost:8083/api/v1/products';
+  private apiBaseUrl = this.resolveApiBaseUrl();
+  private apiNotificationUrl = `${this.apiBaseUrl}/notifications`;
+  private apiOrdersUrl = `${this.apiBaseUrl}/orders`;
+  private apiInventoryUrl = `${this.apiBaseUrl}/inventory`;
+  private apiUsersUrl = `${this.apiBaseUrl}/customers`;
+  private apiProductsUrl = `${this.apiBaseUrl}/products`;
 
   constructor(private http: HttpClient) {}
+
+  private resolveApiBaseUrl(): string {
+    const hostname = window.location.hostname || 'localhost';
+    return `http://${hostname}:8083/api/v1`;
+  }
 
   loggedInCustomerId = 0;
   setLoggedInCustomer(loggedInCustomerId: number) {
