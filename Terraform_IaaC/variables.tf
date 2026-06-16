@@ -64,28 +64,28 @@ variable "public_subnet_two_tags" {
   default     = "public_subnet_two"
 }
 
-variable "private_subnet_one" {
+variable "private_dev_subnet_one" {
   description = "Specify the cidr block for the private subnet one."
   type        = string
   default     = "10.0.3.0/24"
 }
 
-variable "private_subnet_one_tags" {
+variable "private_dev_subnet_one_tags" {
   description = "Specify the tags for private subnet one."
   type        = string
-  default     = "private_subnet_one"
+  default     = "private_dev_subnet_one"
 }
 
-variable "private_subnet_two" {
+variable "private_dev_subnet_two" {
   description = "Specify the cidr block for the private subnet two."
   type        = string
   default     = "10.0.4.0/24"
 }
 
-variable "private_subnet_two_tags" {
+variable "private_dev_subnet_two_tags" {
   description = "Specify the tags for private subnet two."
   type        = string
-  default     = "private_subnet_two"
+  default     = "private_dev_subnet_two"
 } 
 
 variable "custom-vpc-IGW" {
@@ -132,7 +132,7 @@ variable "ec2_tags" {
 variable "instance_type" {
   description = "Specify the instance type to be used for the instance."
   type        = string
-  default     = "t3.micro"
+  default     = "m7i-flex.large"
 }
 
 variable "key_name" {
@@ -163,7 +163,7 @@ variable "db_password" {
 variable "db_instance_class" {
   description = "Specify the RDS instance class."
   type        = string
-  default     = "db.t3.micro"
+  default     = "db.t4g.micro"
 }
 
 variable "db_secret_name_prefix" {

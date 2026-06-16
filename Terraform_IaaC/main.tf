@@ -1,10 +1,10 @@
 ### instance
-resource "aws_instance" "web_instance" {
+resource "aws_instance" "dev_instance" {
   ami           = lookup(var.ami_id, var.region)
   instance_type = var.instance_type
   iam_instance_profile = aws_iam_instance_profile.ec2_profile.name
-  subnet_id     = aws_subnet.custom-vpc-public-subnet-one.id
-  vpc_security_group_ids = [aws_security_group.custom-vpc-security-group.id]
+  subnet_id     = aws_subnet.custom-dev-vpc-public-subnet-one.id
+  vpc_security_group_ids = [aws_security_group.custom-dev-vpc-security-group.id]
   key_name      = var.key_name
 
   tags = {
@@ -13,13 +13,13 @@ resource "aws_instance" "web_instance" {
 }
 
 ### create security group
-resource "aws_security_group" "custom-vpc-security-group" {
-  name          = "custom-vpc-security-group"
-  description   = "custom-vpc-security-group"
-  vpc_id        = aws_vpc.custom-vpc-terraform.id
+resource "aws_security_group" "custom-dev-vpc-security-group" {
+  name          = "custom-dev-vpc-security-group"
+  description   = "custom-dev-vpc-security-group"
+  vpc_id        = aws_vpc.custom-dev-vpc-terraform.id
 
   ingress {
-    description = "custom-vpc-security-group"
+    description = "custom-dev-vpc-security-group"
     from_port   = 80
     to_port     = 80
     protocol    = "tcp"

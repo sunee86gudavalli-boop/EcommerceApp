@@ -3,13 +3,13 @@
 resource "aws_security_group" "rds_sg" {
   name        = "mysql-rds-security-group"
   description = "Allow MySQL traffic from the application instance"
-  vpc_id      = aws_vpc.custom-vpc-terraform.id
+  vpc_id      = aws_vpc.custom-dev-vpc-terraform.id
 
   ingress {
     from_port   = 3306
     to_port     = 3306
     protocol    = "tcp"
-    security_groups = [aws_security_group.custom-vpc-security-group.id]
+    security_groups = [aws_security_group.custom-dev-vpc-security-group.id]
   }
 
   egress {
@@ -46,8 +46,8 @@ resource "aws_secretsmanager_secret_version" "rds_credentials_new" {
 resource "aws_db_subnet_group" "rds_subnet_group" {
   name       = "mysql-db-subnet-group"
   subnet_ids = [
-    aws_subnet.custom-vpc-private-subnet-one.id,
-    aws_subnet.custom-vpc-private-subnet-two.id,
+    aws_subnet.custom-dev-vpc-private-subnet-one.id,
+    aws_subnet.custom-dev-vpc-private-subnet-two.id,
   ]
 
   tags = {
