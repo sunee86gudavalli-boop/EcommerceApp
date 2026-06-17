@@ -19,9 +19,7 @@ phases:
   build:
     commands:
       - echo "Project Structure"
-      - ls -la
-      - echo "POM File"
-      - cat pom.xml
+      - cd BackEnd
       - mvn clean package -DskipTests
 
   post_build:
@@ -32,4 +30,4 @@ phases:
 
 artifacts:
   files:
-    - target/*.jar
+    - BackEnd/target/*.jar
