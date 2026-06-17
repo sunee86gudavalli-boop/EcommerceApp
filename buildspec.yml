@@ -4,28 +4,32 @@ phases:
   install:
     runtime-versions:
       java: corretto17
+    commands:
+      - echo "Current Directory"
+      - pwd
+      - ls -la
 
   pre_build:
     commands:
-      - echo "Starting build process..."
+      - echo "Java Version"
       - java -version
+      - echo "Maven Version"
       - mvn -version
 
   build:
     commands:
-      - echo "Building Spring Boot application..."
+      - echo "Project Structure"
+      - ls -la
+      - echo "POM File"
+      - cat pom.xml
       - mvn clean package -DskipTests
 
   post_build:
     commands:
-      - echo "Build completed successfully"
-      - ls -ltr target/
+      - echo "Build Complete"
+      - ls -ltr
+      - ls -ltr target || true
 
 artifacts:
   files:
     - target/*.jar
-  discard-paths: yes
-
-cache:
-  paths:
-    - '/root/.m2/**/*'
