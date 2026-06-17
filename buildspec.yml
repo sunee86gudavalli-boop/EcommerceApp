@@ -31,3 +31,4 @@ phases:
 artifacts:
   files:
     - BackEnd/target/*.jar
+  discard-paths: yes
