@@ -1,0 +1,31 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      java: corretto17
+
+  pre_build:
+    commands:
+      - echo "Starting build process..."
+      - java -version
+      - mvn -version
+
+  build:
+    commands:
+      - echo "Building Spring Boot application..."
+      - mvn clean package -DskipTests
+
+  post_build:
+    commands:
+      - echo "Build completed successfully"
+      - ls -ltr target/
+
+artifacts:
+  files:
+    - target/*.jar
+  discard-paths: yes
+
+cache:
+  paths:
+    - '/root/.m2/**/*'
